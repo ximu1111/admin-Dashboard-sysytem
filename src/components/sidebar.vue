@@ -17,7 +17,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 </script>
 <template>
     <div class="sidebar">
-        <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" @open="handleOpen"
+        <el-menu default-active="2" class="sidebar-el-menu" :collapse="isCollapse" @open="handleOpen"
             @close="handleClose">
             <el-sub-menu index="1">
                 <template #title>
@@ -59,8 +59,24 @@ const handleClose = (key: string, keyPath: string[]) => {
     </div>
 </template>
 <style scoped>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
+.sidebar {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 70px;
+    bottom: 0;
+    overflow-y: scroll;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 0;
+}
+
+.sidebar-el-menu:not(.el-menu--collapse) {
+    width: 250px;
+}
+
+.sidebar-el-menu {
+    min-height: 100%;
 }
 </style>
