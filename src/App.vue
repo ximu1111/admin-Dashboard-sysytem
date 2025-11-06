@@ -4,4 +4,6 @@
   <router-view></router-view>
 </template>
 
-<style scoped></style>
+<style>
+@import '/src/assets/common.css';
+</style>

@@ -1,94 +1,87 @@
-/* 基础重置样式 */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  /* 设置根字体大小，便于rem计算 */
-  font-size: 16px;
-  /* 平滑滚动 */
-  scroll-behavior: smooth;
+  outline: 0 !important;
 }
 
 body {
-  /* 系统字体栈 */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
-              'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji';
-  line-height: 1.6;
-  color: #333;
-  background-color: #fff;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family:
+    'PingFang SC', 'Helvetica Neue', Helvetica, 'microsoft yahei', arial, STHeiTi, sans-serif;
 }
 
-/* 移除列表样式 */
-ul, ol {
-  list-style: none;
-}
-
-/* 链接样式 */
 a {
-  color: inherit;
   text-decoration: none;
-  transition: color 0.3s ease;
+}
+i {
+  font-style: normal;
 }
 
-a:hover {
-  color: #1890ff;
+.container {
+  padding: 30px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-/* 图片响应式 */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+.el-table th {
+  background-color: #f5f7fa !important;
 }
 
-/* 表单元素重置 */
-input, button, textarea, select {
-  font: inherit;
-  border: none;
-  outline: none;
-  background: none;
+.plugins-tips {
+  padding: 20px 10px;
+  margin-bottom: 20px;
+  background: #eef1f6;
 }
 
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
+.plugins-tips a {
+  color: var(--el-color-primary);
 }
 
-/* 表格重置 */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
+.el-button + .el-tooltip {
+  margin-left: 10px;
 }
 
-/* 隐藏元素 */
-.hidden {
+.mgb20 {
+  margin-bottom: 20px;
+}
+.mgb10 {
+  margin-bottom: 10px;
+}
+.mr10 {
+  margin-right: 10px;
+}
+
+.move-enter-active,
+.move-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.move-enter-from,
+.move-leave-to {
+  opacity: 0;
+}
+
+.el-time-panel__content::after,
+.el-time-panel__content::before {
+  margin-top: -7px;
+}
+
+.el-time-spinner__wrapper .el-scrollbar__wrap:not(.el-scrollbar__wrap--hidden-default) {
+  padding-bottom: 0;
+}
+
+[hidden] {
   display: none !important;
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 :root {
-	--header-bg-color: #242f42;
-	--header-text-color: #fff;
-	--active-color: var(--el-color-primary);
+  --header-bg-color: #242f42;
+  --header-text-color: #fff;
+  --active-color: var(--el-color-primary);
 }
