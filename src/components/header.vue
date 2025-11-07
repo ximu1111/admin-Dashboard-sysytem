@@ -43,7 +43,7 @@ const setFullScreen = () => {
     <div class="header">
         <!-- 折叠按钮 -->
         <div class="header-left">
-            <img class="logo" src="" alt="" />
+            <img class="logo" src="../assets/img/logo.png" alt="" />
             <div class="web-title">后台管理系统</div>
             <div class="collapse-btn" @click="collapseChage">
                 <el-icon v-if="sidebar.collapse">
@@ -122,6 +122,7 @@ const setFullScreen = () => {
 
 .logo {
     width: 35px;
+    border-radius: 50%;
 }
 
 .web-title {
