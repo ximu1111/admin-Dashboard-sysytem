@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
+import { useTabsStore } from '@/stores/tabs'
 import vHeader from '@/components/header.vue'
 import vSidebar from '@/components/sidebar.vue'
 import vTabs from '@/components/tabs.vue'
 const sidebar = useSidebarStore()
-
+const tabs  = useTabsStore()
 </script>
 <template>
     <div class="wrapper">
@@ -12,6 +13,15 @@ const sidebar = useSidebarStore()
         <v-sidebar />
         <div class="content-box" :class="{ 'content-collapse': sidebar.collapse }">
             <v-tabs />
+            <div class="content">
+                <router-view v-slot="{ Component }">
+                    <transition name="move" mode="out-in">
+                        <keep-alive :include="tabs.nameList">
+                            <component :is="Component"></component>
+                        </keep-alive>
+                    </transition>
+                </router-view>
+            </div>
         </div>
     </div>
 </template>

@@ -1,50 +1,113 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useTabsStore } from '@/stores/tabs'
-import { onBeforeRouteUpdate, useRoute } from 'vue-router'
-import type { TabPaneName } from 'element-plus'
+import { ref, watch } from 'vue';
+import { useTabsStore } from '../stores/tabs';
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 
-const route = useRoute()
-const tabsStore = useTabsStore()
-const activePath = ref(route.fullPath)
-let tabIndex = 2
-
-
+const route = useRoute();
+const router = useRouter();
+const activePath = ref(route.fullPath);
+const tabs = useTabsStore();
+// 设置标签
 const setTags = (route: any) => {
-    const isExist = tabsStore.list.some((item) => {
-        return item.path === route.fullPath
-    })
+    const isExist = tabs.list.some((item) => {
+        return item.path === route.fullPath;
+    });
     if (!isExist) {
-        tabsStore.setTabItem({
+        tabs.setTabItem({
             name: route.name,
             title: route.meta.title,
-            path: route.fullPath
-        })
+            path: route.fullPath,
+        });
     }
-}
-setTags(route)
+};
+setTags(route);
 onBeforeRouteUpdate((to) => {
-    setTags(to)
-})
+    setTags(to);
+});
+
+// 关闭全部标签
+const closeAll = () => {
+    tabs.clearTabs();
+    router.push('/');
+};
+// 关闭其他标签
+const closeOther = () => {
+    const curItem = tabs.list.filter((item) => {
+        return item.path === route.fullPath;
+    });
+    tabs.closeTabsOther(curItem);
+};
+const handleTags = (command: string) => {
+    switch (command) {
+        case 'current':
+            // 关闭当前页面的标签页
+            tabs.closeCurrentTag({
+                $router: router,
+                $route: route,
+            });
+            break;
+        case 'all':
+            closeAll();
+            break;
+
+        case 'other':
+            closeOther();
+            break;
+    }
+};
+
+const clickTabls = (item: any) => {
+    router.push(item.props.name);
+};
+const closeTabs = (path: string) => {
+    const index = tabs.list.findIndex((item) => item.path === path);
+    tabs.delTabItem(index);
+    const item = tabs.list[index] || tabs.list[index - 1];
+    router.push(item ? item.path : '/');
+};
+
+watch(
+    () => route.fullPath,
+    (newVal, oldVal) => {
+        activePath.value = newVal;
+    }
+);
 </script>
+
+
 <template>
     <div class="tabs-container">
-        <el-tabs v-model="activePath" type="card" closable class="tabs" @tab-click="">
-            <el-tab-pane v-for="item in tabsStore.list" :key="item.name" :label="item.title" :name="item.name">
-            </el-tab-pane>
+        <el-tabs v-model="activePath" class="tabs" type="card" closable @tab-click="clickTabls" @tab-remove="closeTabs">
+            <el-tab-pane
+                v-for="item in tabs.list"
+                :key="item.path"
+                :label="item.title"
+                :name="item.path"
+                @click="setTags(item)"
+            ></el-tab-pane>
         </el-tabs>
-        <div>
-            <el-dropdowm>
-
-            </el-dropdowm>
+        <div class="Tabs-close-box">
+            <el-dropdown @command="handleTags">
+                <el-button size="small" type="primary" plain>
+                    标签选项
+                    <el-icon class="el-icon--right">
+                        <arrow-down />
+                    </el-icon>
+                </el-button>
+                <template #dropdown>
+                    <el-dropdown-menu size="small">
+                        <el-dropdown-item command="other">关闭其他</el-dropdown-item>
+                        <el-dropdown-item command="current">关闭当前</el-dropdown-item>
+                        <el-dropdown-item command="all">关闭所有</el-dropdown-item>
+                    </el-dropdown-menu>
+                </template>
+            </el-dropdown>
         </div>
     </div>
-
 </template>
 
 
-
-<style lang="scss" scoped>
+<style scss>
 .tabs-container {
     position: relative;
     overflow: hidden;
