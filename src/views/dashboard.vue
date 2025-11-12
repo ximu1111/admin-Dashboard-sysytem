@@ -1,5 +1,95 @@
-<script setup lang="ts">
+<script setup lang="ts" name="dashboard">
+import countup from '@/components/countup.vue'
+import { use } from 'echarts/core';
+import { BarChart, LineChart, PieChart, MapChart } from 'echarts/charts';
+import {
+    GridComponent,
+    TooltipComponent,
+    LegendComponent,
+    TitleComponent,
+    VisualMapComponent,
+} from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+import VChart from 'vue-echarts';
+import { dashOpt1, dashOpt2, mapOptions } from './chart/option';
+use([
+    CanvasRenderer,
+    BarChart,
+    GridComponent,
+    LineChart,
+    PieChart,
+    TooltipComponent,
+    LegendComponent,
+    TitleComponent,
+    VisualMapComponent,
+    MapChart,
+]);
 
+const activities = [
+    {
+        content: '收藏商品',
+        description: 'xxx收藏了你的商品，就是不买',
+        timestamp: '30分钟前',
+        color: '#00bcd4',
+    },
+    {
+        content: '用户评价',
+        description: 'xxx给了某某商品一个差评，吐血啊',
+        timestamp: '55分钟前',
+        color: '#1ABC9C',
+    },
+    {
+        content: '订单提交',
+        description: 'xxx提交了订单，快去收钱吧',
+        timestamp: '1小时前',
+        color: '#3f51b5',
+    },
+    {
+        content: '退款申请',
+        description: 'xxx申请了仅退款，又要亏钱了',
+        timestamp: '15小时前',
+        color: '#f44336',
+    },
+    {
+        content: '商品上架',
+        description: '运营专员瞒着你上架了一辆飞机',
+        timestamp: '1天前',
+        color: '#009688',
+    },
+];
+
+const ranks = [
+    {
+        title: '手机',
+        value: 10000,
+        percent: 80,
+        color: '#f25e43',
+    },
+    {
+        title: '电脑',
+        value: 8000,
+        percent: 70,
+        color: '#00bcd4',
+    },
+    {
+        title: '相机',
+        value: 6000,
+        percent: 60,
+        color: '#64d572',
+    },
+    {
+        title: '衣服',
+        value: 5000,
+        percent: 55,
+        color: '#e9a745',
+    },
+    {
+        title: '书籍',
+        value: 4000,
+        percent: 50,
+        color: '#009688',
+    },
+];
 </script>
 
 <template>
@@ -7,59 +97,93 @@
         <el-row :gutter="20" class="mgb20">
             <el-col :span="6">
                 <el-card shadow="hover" body-class="card-body">
-
                     <el-icon class="card-icon bg1">
                         <User />
                     </el-icon>
-
                     <div class="card-content">
-
-                        <div>用户</div>
+                        <countup class="card-num color1" :end="6666" />
+                        <div>用户访问量</div>
                     </div>
                 </el-card>
-
             </el-col>
             <el-col :span="6">
                 <el-card shadow="hover" body-class="card-body">
                     <el-icon class="card-icon bg2">
-                        <User />
+                        <ChatDotRound />
                     </el-icon>
                     <div class="card-content">
-                        <div>用户</div>
+                        <countup class="card-num color2" :end="168" />
+                        <div>系统消息</div>
                     </div>
                 </el-card>
             </el-col>
             <el-col :span="6">
                 <el-card shadow="hover" body-class="card-body">
                     <el-icon class="card-icon bg3">
-                        <User />
+                        <Goods />
                     </el-icon>
                     <div class="card-content">
-                        <div>用户</div>
+                        <countup class="card-num color3" :end="8888" />
+                        <div>商品数量</div>
                     </div>
                 </el-card>
             </el-col>
             <el-col :span="6">
                 <el-card shadow="hover" body-class="card-body">
                     <el-icon class="card-icon bg4">
-                        <User />
+                        <ShoppingCartFull />
                     </el-icon>
                     <div class="card-content">
-                        <div>用户</div>
+                        <countup class="card-num color4" :end="568" />
+                        <div>今日订单量</div>
                     </div>
                 </el-card>
             </el-col>
         </el-row>
-    </div>
+        <el-row :gutter="20" class="mgb20">
+            <el-col :span="18">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">
+                            状态
+                        </p>
+                        <p class="card-header-desc">
+                            最近一周的状态
+                        </p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt1"> </v-chart>
+                </el-card>
+            </el-col>
+            <el-col :span="6">
+                <el-card shadow="hover">
+                    <div class="card-header">
+                        <p class="card-header-title">
+                            品种分类
+                        </p>
+                        <p class="card-header-desc">
+                            最近一周的状态
+                        </p>
+                    </div>
+                    <v-chart class="chart" :option="dashOpt2"> </v-chart>
+                </el-card>
+            </el-col>
+        </el-row>
 
-    <div>
-        
+        <el-row>
+            
+        </el-row>
     </div>
-
 </template>
 
 
-
+<style>
+.card-body {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    padding: 0;
+}
+</style>
 <style scoped>
 .card-body {
     display: flex;
