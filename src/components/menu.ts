@@ -150,4 +150,10 @@ export const menuData: Menus[] = [
 
         ],
     },
+    {
+        id: '6',
+        icon: 'Eleme',
+        index: '6',
+        title: '主题',
+    }
 ]
