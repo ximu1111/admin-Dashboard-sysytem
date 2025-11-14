@@ -58,20 +58,18 @@ const setFullScreen = () => {
             <div class="header-user-con">
                 <div class="btn-icon" @click="router.push('/theme')">
                     <el-tooltip effect="dark" content="设置主题" placement="bottom">
-                       <el-icon>
-                        <i class="icon-zhuti_tiaosepan_o"></i>
-                       </el-icon>
+                        <i class="iconfont icon-zhuti1"></i>
                     </el-tooltip>
                 </div>
                 <div class="btn-icon" @click="router.push('/ucenter')">
                     <el-tooltip effect="dark" :content="message ? `有${message}条未读消息` : `消息中心`" placement="bottom">
-                        <i class="icon-zhuti_tiaosepan_o"></i>
+                        <i class="iconfont icon-ringlingsheng"></i>
                     </el-tooltip>
                     <span class="btn-bell-badge" v-if="message"></span>
                 </div>
                 <div class="btn-icon" @click="setFullScreen">
                     <el-tooltip effect="dark" content="全屏" placement="bottom">
-                        <i class="el-icon-lx-full"></i>
+                        <i class="iconfont icon-quanping_o"></i>
                     </el-tooltip>
                 </div>
                 <!-- 用户头像 -->
@@ -113,6 +111,10 @@ const setFullScreen = () => {
     color: var(--header-text-color);
     background-color: var(--header-bg-color);
     border-bottom: 1px solid #ddd;
+}
+
+.iconfont {
+    font-size: 26px;
 }
 
 .header-left {

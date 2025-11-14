@@ -3,7 +3,7 @@ import type { Menus } from '@/types/menu'
 export const menuData: Menus[] = [
     {
         id: '0',
-        title: '工作台',
+        title: '系统首页',
         index: '/dashboard',
         icon: 'ElementPlus',
     },
@@ -153,7 +153,7 @@ export const menuData: Menus[] = [
     {
         id: '6',
         icon: 'Eleme',
-        index: '6',
+        index: '/Theme',
         title: '主题',
     }
 ]

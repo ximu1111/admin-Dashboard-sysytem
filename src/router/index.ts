@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import Home from '../views/home.vue'
+import Theme from '@/views/pages/theme.vue'
 
 const routes: RouteRecordRaw[] = [
   {
-    path:'/',
-    redirect:'/dashboard',
+    path: '/',
+    redirect: '/dashboard',
   },
   {
     path: '/',
@@ -20,6 +21,11 @@ const routes: RouteRecordRaw[] = [
           noAuth: true,
         },
         component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard.vue'),
+      },
+      {
+        path: '/theme',
+        name: 'Theme',
+        component: () => import('../views/pages/theme.vue'),
       },
     ],
   },

@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useSidebarStore } from '../stores/sidebar';
+import { useRoute } from 'vue-router';
+import { menuData } from '@/components/menu';
+
+const route = useRoute();
+const onRoutes = computed(() => {
+    return route.path;
+});
+
+const sidebar = useSidebarStore();
+</script>
 <template>
     <div class="sidebar">
         <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="sidebar.collapse"
@@ -38,20 +51,6 @@
         </el-menu>
     </div>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue';
-import { useSidebarStore } from '../stores/sidebar';
-import { useRoute } from 'vue-router';
-import { menuData } from '@/components/menu';
-
-const route = useRoute();
-const onRoutes = computed(() => {
-    return route.path;
-});
-
-const sidebar = useSidebarStore();
-</script>
 
 <style scoped>
 .sidebar {
