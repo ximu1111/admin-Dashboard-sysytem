@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import Home from '../views/home.vue'
 
-
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -25,11 +24,20 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/theme',
         name: 'Theme',
-        meta:{
-          title:'系统主题',
-          noAuth:true,
+        meta: {
+          title: '系统主题',
+          noAuth: true,
         },
         component: () => import('../views/pages/theme.vue'),
+      },
+      {
+        path: '/ucenter',
+        name: 'ucneter',
+        meta: {
+          title: '',
+          noAuth: true,
+        },
+        component: () => import('../views/pages/ucenter.vue'),
       },
     ],
   },
