@@ -4,6 +4,7 @@ import { useThemeStore } from '@/stores/theme'
 import { reactive } from 'vue';
 const themeStore = useThemeStore();
 const sidebar = useSidebarStore();
+type ColorKey = 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'headerBgColor' | 'headerTextColor';
 
 const color = reactive({
     primary: localStorage.getItem('theme-primary') || '#409eff',
@@ -21,7 +22,7 @@ const sidebarColor = reactive({
 const themes = [
     {
         name: 'primary',
-        color: themeStore.primary || color.primary
+        color: themeStore.primary || color.primary 
     },
     {
         name: 'success',
@@ -41,7 +42,7 @@ const themes = [
     }
 ]
 
-const changeColor = (name: string) => {
+const changeColor = (name: ColorKey) => {
     themeStore.setPropertyColor(color[name], name)
 }
 
@@ -97,7 +98,6 @@ const resetSystemTheme = () => {
     resetSidebar();
 }
 </script>
-
 <template>
     <div>
         <el-card class="mgb20" shadow="hover">
@@ -121,7 +121,7 @@ const resetSystemTheme = () => {
                 <div class="theme-item" v-for="theme in themes">
                     <el-button :type="theme.name">{{ theme.name }}</el-button>
                     <div class="theme-color">{{ theme.color }}</div>
-                    <el-color-picker v-model="color[theme.name]" @change="changeColor(theme.name)" />
+                    <el-color-picker v-model="color[theme.name as keyof typeof color]" @change="changeColor(theme.name as keyof typeof color)" />
                 </div>
             </div>
             <div class="flex-center">

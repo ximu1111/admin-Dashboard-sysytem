@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import Home from '../views/home.vue'
-import Theme from '@/views/pages/theme.vue'
+
 
 const routes: RouteRecordRaw[] = [
   {
@@ -25,6 +25,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/theme',
         name: 'Theme',
+        meta:{
+          title:'系统主题',
+          noAuth:true,
+        },
         component: () => import('../views/pages/theme.vue'),
       },
     ],

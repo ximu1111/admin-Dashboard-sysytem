@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { min, setProperty } from '@/utils'
 
 interface ThemeState {
+  [key: string]: string
   primary: string
   success: string
   warning: string
