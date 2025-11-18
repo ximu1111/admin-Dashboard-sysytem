@@ -34,10 +34,19 @@ const routes: RouteRecordRaw[] = [
         path: '/ucenter',
         name: 'ucneter',
         meta: {
-          title: '',
+          title: '个人中心',
           noAuth: true,
         },
         component: () => import('../views/pages/ucenter.vue'),
+      },
+      {
+        path: '/goodList',
+        name: 'goodList',
+        meta: {
+          title: '商品列表',
+          noAuth: true,
+        },
+        component: () => import('../views/goods/goodList.vue'),
       },
     ],
   },

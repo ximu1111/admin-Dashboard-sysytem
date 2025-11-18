@@ -22,7 +22,7 @@ export const menuData: Menus[] = [
             {
                 id: '12',
                 pid: '1',
-                index: '/system-role',
+                index: '/goodList',
                 title: '商品列表',
             },
             {
