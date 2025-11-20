@@ -22,6 +22,7 @@ const handleSearch = () => {}
     <div>
         <tableSearch :query="query" :options="searchOpt" :search="handleSearch" />
     </div>
+    <tableCustom/>
 </template>
 
 <style scoped></style>
