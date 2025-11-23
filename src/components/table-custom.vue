@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { toRefs, type PropType, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
+import { Refresh, Delete, View, Edit } from '@element-plus/icons-vue'
 
 const props = defineProps({
     // 表格相关
@@ -109,26 +110,78 @@ const getIndex = (index: number) => {
 
 <template>
     <div>
-        <div class="table-ttolar" v-if="hasToolbar">
-            <div class="table-toolar-left">
+        <div class="table-toolbar" v-if="hasToolbar">
+            <div class="table-toolbar-left">
                 <slot name="toolbarBtn">
                 </slot>
             </div>
-        </div>
-        <div class="table-toolbar-right flex-center">
-            <template v-if="multipleSelection.length > 0">
-                <el-tooltip effect="dark" content="删除选中" placement="top">
-                    <el-icon class="columns-setting-icon" @click="delSelection(multipleSelection)">
-                        <Delete />
+
+            <div class="table-toolbar-right flex-center">
+                <template v-if="multipleSelection.length > 0">
+                    <el-tooltip effect="dark" content="删除选中" placement="top">
+                        <el-icon class="columns-setting-icon" @click="delSelection(multipleSelection)">
+                            <Delete />
+                        </el-icon>
+                    </el-tooltip>
+                    <el-divider direction="vertical" />
+                </template>
+                <el-tooltip effect="dark" content="刷新" placement="top">
+                    <el-icon class="columns-setting-icon" @click="refresh">
+                        <Refresh />
                     </el-icon>
                 </el-tooltip>
-                <el-divider direction="vertival" />
-            </template>
-            <el-tooltip>
-
-            </el-tooltip>
+                <el-divider direction="vertical" />
+                <el-tooltip effect="dark" content="列设置" placement="top">
+                    <el-dropdown :hide-on-click="false" size="small" trigger="click">
+                        <el-icon class="columns-setting-icon">
+                            <Setting />
+                        </el-icon>
+                        <template #dropdown>
+                            <el-dropdown-menu>
+                                <el-dropdown-item v-for="c in columns">
+                                    <el-checkbox v-model="c.visible" :label="c.label" />
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </template>
+                    </el-dropdown>
+                </el-tooltip>
+            </div>
         </div>
-        <el-table></el-table>
+
+        <el-table class="mgb20" :style="{ width: '100%' }" :date="tableData" :row-key="rowKey"
+            @selection-change="handleSelectionChange" table-layout="auto">
+            <template v-for="item in columns" :key="item.props">
+                <el-table-column v-if="item.visible" :prop="item.prop" :label="item.label" :width="item.width"
+                    :type="item.type" :align="item.align || 'center'">
+                    <template #default="{ row, column, $index }" v-if="item.type === 'index'">
+                        {{ getIndex($index) }}
+                    </template>
+                    <template #default="{ row, column, $index }" v-if="!item.type">
+                        <slot :name="item.prop" :rows="row" :index="$index">
+                            <template v-if="item.prop == 'operator'">
+                                <el-button type="warning" size="small" :icon="View" @click="viewFunc(row)">
+                                    查看
+                                </el-button>
+                                <el-button type="primary" size="small" :icon="Edit" @click="editFunc(row)">
+                                    编辑
+                                </el-button>
+                                <el-button type="danger" size="small" :icon="Delete" @click="handleDelete(row)">
+                                    删除
+                                </el-button>
+                            </template>
+                            <span v-else-if="item.formatter">
+                                {{ item.formatter(row[item.prop]) }}
+                            </span>
+                            <span v-else>
+                                {{ row[item.prop] }}
+                            </span>
+                        </slot>
+                    </template>
+                </el-table-column>
+            </template>
+        </el-table>
+        <el-pagination v-if="hasPagination" :current-page="currentPage" :page-size="pageSize" :background="true"
+            :layout="layout" :total="total" @currnet-change="handleCurrentChange" />
     </div>
 
 </template>
