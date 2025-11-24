@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-    'updata:visible': [value: boolean],
+    'update:visible': [value: boolean],
     'submit': [FormData: any],
     'close': []
 }>()
@@ -55,40 +55,53 @@ const resetForm = () => {
     formRef.value?.resetFields()
     ElMessage.success('表单重置')
 }
+
+const closeDiaslog = () => {
+    emit('update:visible', false)
+    emit('close')
+    resetForm()
+}
+
+defineExpose({
+    resetForm
+})
 </script>
 
 <template>
     <div class="container">
-        <el-form :model="form" label-width="auto" style="max-width: 600px;" ref="formRef">
+        <el-dialog :model-value="visible" :title="isEdit ? '编辑商品' : '新增商品'" @close="closeDiaslog"
+            @update:model-value="$emit('update:visible', $event)" width="600px">
+            <el-form :model="form" label-width="auto" style="max-width: 600px;" ref="formRef">
 
-            <el-form-item label="商品名称">
-                <el-input v-model="form.name" />
-            </el-form-item>
+                <el-form-item label="商品名称">
+                    <el-input v-model="form.name" />
+                </el-form-item>
 
-            <el-form-item label="商品分类">
-                <el-select v-model="form.category">
-                    <el-option value="category1" label="Zone one" />
-                </el-select>
-            </el-form-item>
+                <el-form-item label="商品分类">
+                    <el-select v-model="form.category">
+                        <el-option value="category1" label="Zone one" />
+                    </el-select>
+                </el-form-item>
 
-            <el-form-item label="商品价格" type="number">
-                <el-input v-model="form.money" value=""></el-input>
-            </el-form-item>
+                <el-form-item label="商品价格" type="number">
+                    <el-input v-model="form.money" value=""></el-input>
+                </el-form-item>
 
-            <el-form-item label="上传图片">
-                <el-upload v-model:file-list="filelist" action="" :on-preview="handlePictureCardPreview"
-                    :on-remove="handleRemove">
-                    <el-icon>
-                        <Plus />
-                    </el-icon>
-                </el-upload>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="submit">提交</el-button>
-                <el-button type="" @click="resetForm"> 重置</el-button>
-            </el-form-item>
+                <el-form-item label="上传图片">
+                    <el-upload v-model:file-list="filelist" action="" :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove">
+                        <el-icon>
+                            <Plus />
+                        </el-icon>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submit">提交</el-button>
+                    <el-button type="" @click="resetForm"> 重置</el-button>
+                </el-form-item>
 
-        </el-form>
+            </el-form>
+        </el-dialog>
     </div>
 
 </template>
