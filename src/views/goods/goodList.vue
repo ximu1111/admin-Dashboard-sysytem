@@ -25,10 +25,11 @@ const handleSearch = () => { }
 const columns = ref([
     { type: 'selection' },
     { type: 'index', label: '序号', width: 55, align: 'center' },
-    { type: 'iamge', label: '商品图片', width: 165, align: 'center' },
+    { type: 'image', label: '商品图片', width: 105, align: 'center' },
+    { prop: 'category', label: '商品分类' ,width:115,align:'center'},
     { prop: 'name', label: '商品名' },
-    { prop: 'money', label: '商品价格',width: 175, align: 'center' },
-    { prop: 'state', label: '商品状态',width: 175, align: 'center' },
+    { prop: 'money', label: '商品价格', width: 175, align: 'center' },
+    { prop: 'state', label: '商品状态', width: 175, align: 'center' },
     { prop: 'operator', label: '操作', width: 250 }
 ])
 
@@ -156,7 +157,6 @@ const handleDelete = (row: TableItem) => {
                 </el-tag>
             </template>
         </TableCustom>
-
     </div>
 </template>
 
