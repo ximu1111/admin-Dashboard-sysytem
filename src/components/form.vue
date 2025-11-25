@@ -52,14 +52,21 @@ const handlePictureCardPreview: UploadProps['onRemove'] = (uploadFile) => {
 }
 
 const resetForm = () => {
-    formRef.value?.resetFields()
+    Object.assign(form, {
+        index: '',
+        image: '',
+        name: '',
+        money: '',
+        category: ''
+    })
+    filelist.value = []
     ElMessage.success('表单重置')
+
 }
 
 const closeDiaslog = () => {
     emit('update:visible', false)
     emit('close')
-    resetForm()
 }
 
 defineExpose({
@@ -83,8 +90,8 @@ defineExpose({
                     </el-select>
                 </el-form-item>
 
-                <el-form-item label="商品价格" type="number">
-                    <el-input v-model="form.money" value=""></el-input>
+                <el-form-item label="商品价格">
+                    <el-input v-model="form.money" value="" type="number"></el-input>
                 </el-form-item>
 
                 <el-form-item label="上传图片">

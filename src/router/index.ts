@@ -48,6 +48,24 @@ const routes: RouteRecordRaw[] = [
         },
         component: () => import('../views/goods/goodList.vue'),
       },
+      {
+        path: '/member',
+        name: 'member',
+        meta: {
+          title: '会员列表',
+          noAuth: true,
+        },
+        component: () => import('../views/customer/member.vue'),
+      },
+      {
+        path: '/storeInfo',
+        name: 'storInfo',
+        meta: {
+          title: '店铺信息',
+          noAuth: true,
+        },
+        component: () => import('../views/pages/stroeInfo.vue'),
+      },
     ],
   },
 ]

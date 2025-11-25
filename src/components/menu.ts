@@ -94,7 +94,7 @@ export const menuData: Menus[] = [
             {
                 id: '41',
                 pid: '4',
-                index: '/schart',
+                index: '/member',
                 title: '会员列表',
             },
             {
@@ -127,7 +127,7 @@ export const menuData: Menus[] = [
         id: '5',
         icon: 'Setting',
         index: '5',
-        title: '系统设置',
+        title: '关于我的',
         children: [
             {
                 id: '61',
@@ -138,7 +138,7 @@ export const menuData: Menus[] = [
             {
                 id: '62',
                 pid: '6',
-                index: '/login',
+                index: '/storeInfo',
                 title: '店铺信息',
             },
             {

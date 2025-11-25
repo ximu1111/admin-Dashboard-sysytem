@@ -4,12 +4,13 @@ import { reactive, ref } from 'vue'
 import type { FormOptionList, FormOption } from '@/types/form-option'
 import type { TableItem } from '@/types/table'
 import { fetchData } from '@/api/index'
-import { CirclePlusFilled, Search } from '@element-plus/icons-vue'
 
+import { CirclePlusFilled, Search } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 
 import tableSearch from '@/components/table-search.vue'
 import TableCustom from '@/components/table-custom.vue'
-import { ElMessage } from 'element-plus'
+import VUeForm from '@/components/form.vue'
 
 
 const query = reactive({
@@ -26,7 +27,7 @@ const columns = ref([
     { type: 'selection' },
     { type: 'index', label: '序号', width: 55, align: 'center' },
     { type: 'image', label: '商品图片', width: 105, align: 'center' },
-    { prop: 'category', label: '商品分类' ,width:115,align:'center'},
+    { prop: 'category', label: '商品分类', width: 115, align: 'center' },
     { prop: 'name', label: '商品名' },
     { prop: 'money', label: '商品价格', width: 175, align: 'center' },
     { prop: 'state', label: '商品状态', width: 175, align: 'center' },
@@ -66,6 +67,8 @@ let options = ref<FormOption>({
 const visible = ref(false)
 const isEdit = ref(false)
 const rowData = ref({})
+const formVisible = ref(false)
+const currentRowData = ref({})
 
 const handleEdit = (row: TableItem) => {
     rowData.value = { ...row }
@@ -127,6 +130,18 @@ const handleView = (row: TableItem) => {
 const handleDelete = (row: TableItem) => {
     ElMessage.success('删除成功')
 }
+const handleFormClose = () => {
+    formVisible.value = false
+    currentRowData.value = {}
+}
+const handleFormSubmit = (formData: any) => {
+    getData()
+}
+const handleAdd = ()=>{
+    isEdit.value = false
+    currentRowData.value = {}
+    formVisible.value = true
+}
 </script>
 
 <template>
@@ -138,7 +153,7 @@ const handleDelete = (row: TableItem) => {
             :delFunc="handleDelete" :editFunc="handleEdit" :refresh="getData" :currentPage="page.index"
             :changePage="changePage">
             <template #toolbarBtn>
-                <el-button type="warning" :icon="CirclePlusFilled" @click="visible = true">新增</el-button>
+                <el-button type="warning" :icon="CirclePlusFilled" @click="handleAdd">新增</el-button>
             </template>
             <template #money="{ rows }">
                 ￥{{ rows.money }}
@@ -158,6 +173,9 @@ const handleDelete = (row: TableItem) => {
             </template>
         </TableCustom>
     </div>
+    <VUeForm v-model:visible="formVisible" :is-edit="isEdit" :row-data="currentRowData"
+        @submit="handleFormSubmit" @close="handleFormClose">
+    </VUeForm>
 </template>
 
 <style scoped>
